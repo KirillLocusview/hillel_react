@@ -14,3 +14,14 @@ function compareArrays2(arr1, arr2) {
 	}
 	return true;
 }
+
+function compareArrays3(arr1, arr2) {
+	let isEquals = true;
+	if (arr1.length != arr2.length) return false;
+	arr1.forEach((element, index) => {
+		if (element != arr2[index]) {
+			isEquals = false;
+		}
+	});
+	return isEquals;
+}

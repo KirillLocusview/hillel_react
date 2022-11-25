@@ -1,10 +1,13 @@
-let arr = [[3, 4, [5]], 1, 2 , 6, [7, 8], 9];
-let newArr = [];
-arr = toOneDimensional(arr);
+let arr = [1, 2, [3, 4, [5]], 6, [7, 8], 9];
+const newArr = toOneDimensional(arr);
 console.log(newArr);
 
 function toOneDimensional(arr) {
-	for (let el of arr)
-		el instanceof Array ? toOneDimensional(el) : newArr.push(el);
-	return newArr;
+	let funcArray = [];
+	arr.forEach((el) => {
+		if (Array.isArray(el)) funcArray = funcArray.concat(toOneDimensional(el));
+		else funcArray.push(el);
+	});
+
+	return funcArray;
 }

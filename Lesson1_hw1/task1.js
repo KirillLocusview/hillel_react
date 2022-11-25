@@ -9,7 +9,5 @@ function findLongestWord(string) {
 }
 
 function checkLength(word1, word2) {
-	if (word1.length > word2.length) return -1;
-	if (word1.length < word2.length) return 1;
-	if (word1.length === word2.length) return 0;
+	return word1.length - word2.length >= 0 ? -1 : 1;
 }

@@ -9,5 +9,5 @@ function toOneDimensional(arr) {
 		else funcArray.push(el);
 	});
 
-	return funcArray;
+	return funcArray
 }

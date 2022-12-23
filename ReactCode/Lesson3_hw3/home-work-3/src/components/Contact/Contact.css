@@ -1,0 +1,11 @@
+.contact {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.contact-data {
+	flex-grow: 1;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}

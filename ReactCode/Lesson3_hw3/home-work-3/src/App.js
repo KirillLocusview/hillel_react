@@ -37,9 +37,9 @@ class App extends React.Component {
 		}
 		const newContacts = this.state.contacts.map((contact) => contact);
 		newContacts.push({
-			firstName: this.state.fields.firstName,
-			lastName: this.state.fields.lastName,
-			phone: this.state.fields.phone,
+			firstName: fields.firstName,
+			lastName: fields.lastName,
+			phone: fields.phone,
 			id: Math.random(),
 		});
 		newContacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
@@ -47,6 +47,7 @@ class App extends React.Component {
 			contacts: newContacts,
 			fields: { firstName: "", lastName: "", phone: "" },
 			isEmpty: false,
+			addPressed: false,
 		});
 	};
 

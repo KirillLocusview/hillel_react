@@ -35,17 +35,16 @@ class App extends React.Component {
 				return;
 			}
 		}
-
+		const newContacts = this.state.contacts.map((contact) => contact);
+		newContacts.push({
+			firstName: this.state.fields.firstName,
+			lastName: this.state.fields.lastName,
+			phone: this.state.fields.phone,
+			id: Math.random(),
+		});
+		newContacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
 		this.setState({
-			contacts: [
-				...this.state.contacts,
-				{
-					firstName: this.state.fields.firstName,
-					lastName: this.state.fields.lastName,
-					phone: this.state.fields.phone,
-					id: Math.random(),
-				},
-			],
+			contacts: newContacts,
 			fields: { firstName: "", lastName: "", phone: "" },
 			isEmpty: false,
 		});

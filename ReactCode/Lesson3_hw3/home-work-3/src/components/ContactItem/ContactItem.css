@@ -1,0 +1,23 @@
+.contact {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 10px;
+	padding: 0 10px 10px 10px;
+	border-bottom: solid 4px rgb(176, 169, 169);
+	border-radius: 10px;
+}
+
+.contact-data {
+	flex-grow: 1;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+}
+
+.contact-delete {
+	border: solid 3px rgb(176, 169, 169);
+	border-radius: 10px;
+}
+.contact-delete:hover {
+	background-color: #ccc;
+}

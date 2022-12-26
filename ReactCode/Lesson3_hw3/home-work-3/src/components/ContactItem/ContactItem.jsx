@@ -1,30 +1,23 @@
 import React from "react";
 import "./ContactItem.css";
 
-class Contact extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
-
-	render() {
-		const { firstName, lastName, phone, id } = this.props.contact;
-		return (
-			<div className="contact">
-				<div className="contact-data">
-					<div className="contact-data__first-name">{firstName}</div>
-					<div className="contact-data__last-name">{lastName}</div>
-					<div className="contact-data__phone">{phone}</div>
-				</div>
-				<button
-					className="contact-delete"
-					onClick={(e) => this.props.onDelete(e, id)}
-				>
-					Delete
-				</button>
+function ContactItem({ contact, onDelete }) {
+	const onDeleteContact = (e) => {
+		e.preventDefault();
+		onDelete(contact.id);
+	};
+	return (
+		<div className="contact">
+			<div className="contact-data">
+				<div className="contact-data__first-name">{contact.firstName}</div>
+				<div className="contact-data__last-name">{contact.lastName}</div>
+				<div className="contact-data__phone">{contact.phone}</div>
 			</div>
-		);
-	}
+			<button className="contact-delete" onClick={(e) => onDeleteContact(e)}>
+				Delete
+			</button>
+		</div>
+	);
 }
 
-export default Contact;
+export default ContactItem;

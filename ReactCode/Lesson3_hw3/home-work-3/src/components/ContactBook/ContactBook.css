@@ -11,8 +11,7 @@
 }
 
 .contact-book__new-contact {
-	width: 50%;
-	align-self: center;
+	align-self: stretch;
 	border: solid 3px rgb(176, 169, 169);
 	border-radius: 10px;
 }

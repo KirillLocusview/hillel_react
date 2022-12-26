@@ -1,41 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
 import Form from "./components/Form/Form";
 import ContactBook from "./components/ContactBook/ContactBook";
-class App extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			fields: {
-				firstName: "",
-				lastName: "",
-				phone: "",
-				isEmpty: false,
-			},
-			contacts: [],
-			addPressed: false,
-		};
-	}
 
-	onInputChange = (e) => {
+function App() {
+	const [fields, setFields] = useState({
+		firstName: "",
+		lastName: "",
+		phone: "",
+		isEmpty: false,
+	});
+	const [contacts, setContacts] = useState([]);
+	const [addPressed, setAddPressed] = useState(false);
+
+	const onInputChange = (e) => {
 		const { value, name } = e.target;
-		this.setState({
-			fields: { ...this.state.fields, [name]: value },
-		});
+		setFields({ ...fields, [name]: value });
 	};
 
-	onAddContack = (e) => {
+	const onAddContack = (e) => {
 		e.preventDefault();
-		const { fields } = this.state;
 		for (let key in fields) {
 			if (fields[key] === "") {
-				this.setState({
-					fields: { ...this.state.fields, isEmpty: true },
-				});
+				setFields({ ...fields, isEmpty: true });
 				return;
 			}
 		}
-		const newContacts = this.state.contacts.map((contact) => contact);
+		const newContacts = contacts.map((contact) => contact);
 		newContacts.push({
 			firstName: fields.firstName,
 			lastName: fields.lastName,
@@ -43,54 +34,54 @@ class App extends React.Component {
 			id: Math.random(),
 		});
 		newContacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
-		this.setState({
-			contacts: newContacts,
-			fields: { firstName: "", lastName: "", phone: "" },
+		setContacts(newContacts);
+		setFields({
+			firstName: "",
+			lastName: "",
+			phone: "",
 			isEmpty: false,
-			addPressed: false,
 		});
+		setAddPressed(false);
 	};
 
-	onDelete = (e, id) => {
-		e.preventDefault();
-		this.setState({
-			contacts: this.state.contacts.filter((contact) => contact.id !== id),
+	const onDelete = (id) => {
+		const newContacts = contacts.filter((contact) => contact.id !== id);
+		setContacts(newContacts);
+	};
+
+	const onHide = () => {
+		setFields({
+			firstName: "",
+			lastName: "",
+			phone: "",
+			isEmpty: false,
 		});
+		setAddPressed(false);
 	};
 
-	onAddHide = (e) => {
-		e.preventDefault();
-		if (!this.state.addPressed) this.setState({ addPressed: true });
-		else {
-			this.setState({
-				fields: { firstName: "", lastName: "", phone: "" },
-				isEmpty: false,
-				addPressed: false,
-			});
-		}
+	const onAdd = () => {
+		setAddPressed(true);
 	};
 
-	render() {
-		return (
-			<>
-				<div className="container">
-					<ContactBook
-						contacts={this.state.contacts}
-						onDelete={this.onDelete}
-						onAddHide={this.onAddHide}
-						addPressed={this.state.addPressed}
-					/>
-					<Form
-						fields={this.state.fields}
-						onInputChange={this.onInputChange}
-						onAddContack={this.onAddContack}
-						onAddHide={this.onAddHide}
-						addPressed={this.state.addPressed}
-					></Form>
-				</div>
-			</>
-		);
-	}
+	return (
+		<>
+			<div className="container">
+				<ContactBook
+					contacts={contacts}
+					onDelete={onDelete}
+					onAdd={onAdd}
+					addPressed={addPressed}
+				/>
+				<Form
+					fields={fields}
+					onInputChange={onInputChange}
+					onAddContack={onAddContack}
+					onHide={onHide}
+					addPressed={addPressed}
+				></Form>
+			</div>
+		</>
+	);
 }
 
 export default App;

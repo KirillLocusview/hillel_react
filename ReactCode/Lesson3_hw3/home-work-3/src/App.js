@@ -6,12 +6,6 @@ class App extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			fields: {
-				firstName: "",
-				lastName: "",
-				phone: "",
-				isEmpty: false,
-			},
 			contacts: [],
 			addPressed: false,
 		};
@@ -24,28 +18,21 @@ class App extends React.Component {
 		});
 	};
 
-	onAddContack = (e) => {
-		e.preventDefault();
-		const { fields } = this.state;
-		for (let key in fields) {
-			if (fields[key] === "") {
-				this.setState({
-					fields: { ...this.state.fields, isEmpty: true },
-				});
-				return;
-			}
-		}
-		const newContacts = this.state.contacts.map((contact) => contact);
-		newContacts.push({
-			firstName: fields.firstName,
-			lastName: fields.lastName,
-			phone: fields.phone,
-			id: Math.random(),
-		});
+	addContack = (contact) => {
+		const { firstName, lastName, phone } = contact;
+		const newContacts = [
+			...this.state.contacts,
+			{
+				firstName,
+				lastName,
+				phone,
+				id: Math.random(),
+			},
+		];
+
 		newContacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
 		this.setState({
 			contacts: newContacts,
-			fields: { firstName: "", lastName: "", phone: "" },
 			isEmpty: false,
 			addPressed: false,
 		});
@@ -58,16 +45,10 @@ class App extends React.Component {
 		});
 	};
 
-	onAddHide = (e) => {
-		e.preventDefault();
-		if (!this.state.addPressed) this.setState({ addPressed: true });
-		else {
-			this.setState({
-				fields: { firstName: "", lastName: "", phone: "" },
-				isEmpty: false,
-				addPressed: false,
-			});
-		}
+	onAddHide = (isPressed) => {
+		this.setState({
+			addPressed: isPressed,
+		});
 	};
 
 	render() {
@@ -83,7 +64,7 @@ class App extends React.Component {
 					<Form
 						fields={this.state.fields}
 						onInputChange={this.onInputChange}
-						onAddContack={this.onAddContack}
+						addContack={this.addContack}
 						onAddHide={this.onAddHide}
 						addPressed={this.state.addPressed}
 					></Form>

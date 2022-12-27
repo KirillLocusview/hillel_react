@@ -2,11 +2,6 @@ import React from "react";
 import "./ContactItem.css";
 
 class Contact extends React.Component {
-	constructor() {
-		super();
-		this.state = {};
-	}
-
 	render() {
 		const { firstName, lastName, phone, id } = this.props.contact;
 		return (

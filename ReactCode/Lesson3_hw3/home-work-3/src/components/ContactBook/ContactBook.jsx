@@ -2,10 +2,15 @@ import React from "react";
 import ContactItem from "../ContactItem/ContactItem";
 import "../ContactBook/ContactBook.css";
 
-function ContactBook({ contacts, onDelete, addPressed, onAdd }) {
+function ContactBook({
+	contacts,
+	onDelete,
+	addHideToggle,
+	changeAddHideToggle,
+}) {
 	const onAddContact = (e) => {
 		e.preventDefault();
-		onAdd();
+		changeAddHideToggle();
 	};
 	return (
 		<div className="contact-container">
@@ -15,7 +20,7 @@ function ContactBook({ contacts, onDelete, addPressed, onAdd }) {
 				))}
 			</div>
 			<button
-				className={`contact-book__new-contact ${addPressed ? "hide" : ""}`}
+				className={`contact-book__new-contact ${addHideToggle ? "hide" : ""}`}
 				onClick={(e) => onAddContact(e)}
 			>
 				ADD NEW CONTACT

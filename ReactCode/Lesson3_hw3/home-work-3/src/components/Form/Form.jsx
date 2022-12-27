@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "../Form/Form.css";
-function Form({ fields, onInputChange, onAddContack, onHide, addPressed }) {
+
+function Form({ addNewContact, addHideToggle, changeAddHideToggle }) {
+	const initialFieldsState = {
+		firstName: "",
+		lastName: "",
+		phone: "",
+		isEmpty: false,
+	};
+	const [fields, setFields] = useState(initialFieldsState);
 	const { firstName, lastName, phone, isEmpty } = fields;
+
+	const onInputChange = (e) => {
+		const { value, name } = e.target;
+		setFields({ ...fields, [name]: value });
+	};
+
+	const onAddContact = (e) => {
+		e.preventDefault();
+		for (let key in fields) {
+			if (fields[key] === "") {
+				setFields({ ...fields, isEmpty: true });
+				return;
+			}
+		}
+		addNewContact(fields);
+		setFields(initialFieldsState);
+	};
+
 	const onHideForm = (e) => {
 		e.preventDefault();
-		onHide();
+		setFields(initialFieldsState);
+		changeAddHideToggle();
 	};
 
 	return (
-		<form className={`form ${addPressed ? "" : "hide"}`}>
+		<form className={`form ${addHideToggle ? "" : "hide"}`}>
 			<div className="add-form">
 				<div className="add-form__inputs">
 					<input
@@ -48,7 +75,7 @@ function Form({ fields, onInputChange, onAddContack, onHide, addPressed }) {
 						name="phone"
 					/>
 				</div>
-				<button className="add-form__button" onClick={onAddContack}>
+				<button className="add-form__button" onClick={onAddContact}>
 					Add contact
 				</button>
 			</div>

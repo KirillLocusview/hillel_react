@@ -4,44 +4,22 @@ import Form from "./components/Form/Form";
 import ContactBook from "./components/ContactBook/ContactBook";
 
 function App() {
-	const [fields, setFields] = useState({
-		firstName: "",
-		lastName: "",
-		phone: "",
-		isEmpty: false,
-	});
 	const [contacts, setContacts] = useState([]);
-	const [addPressed, setAddPressed] = useState(false);
+	const [addHideToggle, setAddHideToggle] = useState(false);
 
-	const onInputChange = (e) => {
-		const { value, name } = e.target;
-		setFields({ ...fields, [name]: value });
-	};
-
-	const onAddContack = (e) => {
-		e.preventDefault();
-		for (let key in fields) {
-			if (fields[key] === "") {
-				setFields({ ...fields, isEmpty: true });
-				return;
-			}
-		}
-		const newContacts = contacts.map((contact) => contact);
-		newContacts.push({
-			firstName: fields.firstName,
-			lastName: fields.lastName,
-			phone: fields.phone,
-			id: Math.random(),
-		});
+	const addNewContact = ({ firstName, lastName, phone }) => {
+		const newContacts = [
+			...contacts,
+			{
+				firstName,
+				lastName,
+				phone,
+				id: Math.random(),
+			},
+		];
 		newContacts.sort((a, b) => a.firstName.localeCompare(b.firstName));
 		setContacts(newContacts);
-		setFields({
-			firstName: "",
-			lastName: "",
-			phone: "",
-			isEmpty: false,
-		});
-		setAddPressed(false);
+		setAddHideToggle(!addHideToggle);
 	};
 
 	const onDelete = (id) => {
@@ -49,18 +27,8 @@ function App() {
 		setContacts(newContacts);
 	};
 
-	const onHide = () => {
-		setFields({
-			firstName: "",
-			lastName: "",
-			phone: "",
-			isEmpty: false,
-		});
-		setAddPressed(false);
-	};
-
-	const onAdd = () => {
-		setAddPressed(true);
+	const changeAddHideToggle = () => {
+		setAddHideToggle(!addHideToggle);
 	};
 
 	return (
@@ -69,15 +37,13 @@ function App() {
 				<ContactBook
 					contacts={contacts}
 					onDelete={onDelete}
-					onAdd={onAdd}
-					addPressed={addPressed}
+					addHideToggle={addHideToggle}
+					changeAddHideToggle={changeAddHideToggle}
 				/>
 				<Form
-					fields={fields}
-					onInputChange={onInputChange}
-					onAddContack={onAddContack}
-					onHide={onHide}
-					addPressed={addPressed}
+					addNewContact={addNewContact}
+					addHideToggle={addHideToggle}
+					changeAddHideToggle={changeAddHideToggle}
 				></Form>
 			</div>
 		</>

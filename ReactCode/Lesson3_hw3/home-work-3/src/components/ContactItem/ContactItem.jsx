@@ -2,8 +2,7 @@ import React from "react";
 import "./ContactItem.css";
 
 function ContactItem({ contact, onDelete }) {
-	const onDeleteContact = (e) => {
-		e.preventDefault();
+	const onDeleteContact = () => {
 		onDelete(contact.id);
 	};
 	return (
@@ -13,7 +12,7 @@ function ContactItem({ contact, onDelete }) {
 				<div className="contact-data__last-name">{contact.lastName}</div>
 				<div className="contact-data__phone">{contact.phone}</div>
 			</div>
-			<button className="contact-delete" onClick={(e) => onDeleteContact(e)}>
+			<button className="contact-delete" onClick={() => onDeleteContact()}>
 				Delete
 			</button>
 		</div>
